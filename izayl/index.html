@@ -31,28 +31,60 @@ var aqiData = [
   遍历读取aqiData中各个城市的数据
   将空气质量指数大于60的城市显示到aqi-list的列表中
   */
+  /**
+   * 数组升序排序
+   * @param  {number}   prev 前一个元素
+   * @param  {number}   next 下一个元素
+   * @return {Boolean}  next>prev为真，next将会排在prev前
+   */
   var sortNumIncrease = function(prev, next){
     return  next[1] - prev[1];
   }
-  var sortNumDecrease = function (prev, next) {
+  /**
+   * 数组降序排序
+   * @param  {number}   prev 前一个元素
+   * @param  {number}   next 下一个元素
+   * @return {Boolean}  next<prev为真，next将会排在prev前
+   */  var sortNumDecrease = function (prev, next) {
     return prev[1] - next[1];
   }
+  /**
+   * 过滤器
+   * aqiData.floor 过滤值
+   * @param  {array} val   aqi数组中的一项
+   * @param  {num} index   当前项的序列
+   * @param  {arr} arr     aqi数组 
+   * @return {boolean}     数值大于过滤值为真，保留数据，否则剔除
+   */
   var airQualityFilter = function (val, index, arr) {
     return val[1] >= aqiData.floor;
   }
-
+  /**
+   * 阿拉伯数字对应中文数字
+   * @type {Array}
+   */
   var digit = [
     '一', '二', '三', '四', '五',
     '六', '七', '八', '九', '十'
   ];
   var ul = document.getElementById("aqi-list");
 
+  /**
+   * aqiData数据处理
+   * @param  {number} floor 过滤值
+   * @return {array}        过滤后的数组
+   */
   var result = function (floor) {
     aqiData.floor = floor; 
     aqiData.sort(sortNumIncrease);
     return aqiData.filter(airQualityFilter);
   }(60);
 
+  /**
+   * 数据显示
+   * @param  {array} arr  数据数组
+   * @return void     
+   */
   var display = function (arr) {
     arr.forEach( function(element, index) {
       var el = document.createElement('li');
